@@ -1,14 +1,16 @@
 
-import React,{ useState } from "react";
+import React,{ useRef, useState } from "react";
 import './styles.css'
 
 // Impoted components
 import {Todos} from "../components/Model"
+import Todolist from './Todolist'
 
 
 
 const InputField :React.FC = () => {
-
+// useref hook for imput color changing
+  const inputRef= useRef<HTMLInputElement>(null)
 
     // state
   // <string> is used to specfi that todo is string 
@@ -31,8 +33,11 @@ const InputField :React.FC = () => {
     }
 
  return(
-
-    <form className="input"  >
+<>
+    <form className="input" onSubmit={(e) => {
+        handleSubmit(e)
+        inputRef.current?.blur();
+    }} >
         <input type="input" className="inputbox" 
         value={todo}
         onChange={(e) => {setTodo(e.target.value)}}
@@ -40,7 +45,8 @@ const InputField :React.FC = () => {
         />
         <button type="submit" className="inputsubmit" onClick={handleSubmit} > GO</button>
     </form>
-
+    <Todolist todos={todos} />
+    </>
  )
 
 }
